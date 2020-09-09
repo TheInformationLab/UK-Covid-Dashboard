@@ -18,6 +18,7 @@ const Dashboard = (props) => {
   // const [ viz, setViz ] = useState();
   const [ width, setWidth ] = useState(getWidth());
   const [ height, setHeight ] = useState(getHeight());
+  const [ mobile, setMobile ] = useState(width <= 1050);
   const [ vizParams, setVizParams ] = useState({
     'Embed Area Type' : 'utla'
   });
@@ -36,6 +37,7 @@ const Dashboard = (props) => {
     let vizWidth = getWidth();
     let vizHeight = getHeight();
     const showMobile = vizWidth <= 1050;
+    setMobile(showMobile);
     if (showMobile) {
       vizHeight = 1600;
     }
@@ -106,7 +108,7 @@ const Dashboard = (props) => {
         <div className="flex justify-between w-full">
           <div className="flex">
             <div className="max-w-7xl px-4 my-auto sm:px-6 lg:px-8">
-              <h1 className="text-3xl font-regular leading-tight text-gray-900">
+              <h1 className="text-2xl font-regular leading-tight text-gray-900">
                 UK Coronavirus Dashboard
               </h1>
             </div>
@@ -116,7 +118,9 @@ const Dashboard = (props) => {
             label={"View Area Type"}
             value={vizParams['Embed Area Type']}
             options={areaTypes}
+            mobile={mobile}
             width={250}
+            mobileWidth={200}
             onSelect={(value) => {
               setParam('Embed Area Type', value);
               }}/>  
@@ -130,11 +134,11 @@ const Dashboard = (props) => {
     <main>
       <div className="max-w-7xl mx-auto">
         <div className="">
-          <TableauEmbed
+          {/* <TableauEmbed
             url="https://clientreporting.theinformationlab.co.uk/t/PublicDemo/views/UKCovid-19CaseAnalysis/UKCasesOverview"
             parameters={vizParams}
             options={vizOptions}
-          />
+          /> */}
         </div>
       </div>
     </main>
