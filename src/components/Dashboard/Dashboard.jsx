@@ -3,6 +3,7 @@ import TableauEmbed from '../TableauEmbed';
 import SingleSelectMenu from '../SingleSelectMenu/SingleSelectMenu';
 import TextWithBubblesSVG from '../../images/TIL Text with Bubbles Inline.svg';
 import BubblesSVG from '../../images/Bubbles Colour.svg';
+import SlideOver from '../SlideOver/SlideOver';
 // import PropTypes from 'prop-types';
 //import { Test } from './Dashboard.styles';
 
@@ -15,7 +16,7 @@ const getHeight = () => window.innerHeight
 || document.body.clientWidth;
 
 const Dashboard = (props) => {
-  // const [ viz, setViz ] = useState();
+  const [ sideBar, setSideBar ] = useState(false);
   const [ width, setWidth ] = useState(getWidth());
   const [ height, setHeight ] = useState(getHeight());
   const [ mobile, setMobile ] = useState(width <= 1050);
@@ -113,18 +114,21 @@ const Dashboard = (props) => {
               </h1>
             </div>
           </div>
-          <div className="flex"> 
-          <SingleSelectMenu
-            label={"View Area Type"}
-            value={vizParams['Embed Area Type']}
-            options={areaTypes}
-            mobile={mobile}
-            width={250}
-            mobileWidth={200}
-            onSelect={(value) => {
-              setParam('Embed Area Type', value);
-              }}/>  
-        </div>
+          <div className="flex hidden md:block"> 
+            <SingleSelectMenu
+              label={"View Area Type"}
+              value={vizParams['Embed Area Type']}
+              options={areaTypes}
+              width={250}
+              onSelect={(value) => setParam('Embed Area Type', value)}/>  
+          </div>
+          <div className="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
+            <button type="button" onMouseDown={() => setSideBar(true)} className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:bg-gray-200 transition ease-in-out duration-150" aria-label="Open sidebar">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
         </div>     
       </div>
     </div>
@@ -134,15 +138,16 @@ const Dashboard = (props) => {
     <main>
       <div className="max-w-7xl mx-auto">
         <div className="">
-          {/* <TableauEmbed
+          <TableauEmbed
             url="https://clientreporting.theinformationlab.co.uk/t/PublicDemo/views/UKCovid-19CaseAnalysis/UKCasesOverview"
             parameters={vizParams}
             options={vizOptions}
-          /> */}
+          />
         </div>
       </div>
     </main>
   </div>
+  <SlideOver close={() => setSideBar(false)} show={sideBar} vizParams={vizParams} areaTypes={areaTypes} setParam={(name, value) => setParam(name, value)}/>
 </div>
 
 )};
