@@ -21,7 +21,8 @@ const Dashboard = (props) => {
   const [ height, setHeight ] = useState(getHeight());
   const [ mobile, setMobile ] = useState(width <= 1050);
   const [ vizParams, setVizParams ] = useState({
-    'Embed Area Type' : 'utla'
+    'Embed Area Type' : 'utla',
+    'Embed Measure': 'cases'
   });
   const [ vizOptions, setVizOptions ] = useState({
     hideTabs: true,
@@ -94,6 +95,17 @@ const Dashboard = (props) => {
       value: "ltla"
     },
   ]
+
+  const measures = [
+    {
+      label: "Cases",
+      value: "cases"
+    },
+    {
+      label: "Cases per 100,000 population",
+      value: "pop"
+    }
+  ]
   
   return (
   <div className="min-h-screen bg-gray-100" style={{backgroundColor: '#F4F6F5'}}>
@@ -114,7 +126,13 @@ const Dashboard = (props) => {
               </h1>
             </div>
           </div>
-          <div className="flex hidden md:block"> 
+          <div className="hidden md:flex"> 
+            <SingleSelectMenu
+              label={"Select Measure"}
+              value={vizParams['Embed Measure']}
+              options={measures}
+              width={250}
+              onSelect={(value) => setParam('Embed Measure', value)}/>  
             <SingleSelectMenu
               label={"View Area Type"}
               value={vizParams['Embed Area Type']}
@@ -147,7 +165,7 @@ const Dashboard = (props) => {
       </div>
     </main>
   </div>
-  <SlideOver close={() => setSideBar(false)} show={sideBar} vizParams={vizParams} areaTypes={areaTypes} setParam={(name, value) => setParam(name, value)}/>
+  <SlideOver close={() => setSideBar(false)} show={sideBar} vizParams={vizParams} areaTypes={areaTypes} measures={measures} setParam={(name, value) => setParam(name, value)}/>
 </div>
 
 )};
