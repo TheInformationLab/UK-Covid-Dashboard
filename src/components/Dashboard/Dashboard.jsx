@@ -157,7 +157,7 @@ const Dashboard = (props) => {
       <div className="max-w-7xl mx-auto">
         <div className="">
           <TableauEmbed
-            url="https://clientreporting.theinformationlab.co.uk/t/PublicDemo/views/UKCovid-19CaseAnalysis/UKCasesOverview"
+            url="https://public.tableau.com/views/Covid-19CaseAnalysis_15959477106790/UKCasesOverview"
             parameters={vizParams}
             options={vizOptions}
           />
