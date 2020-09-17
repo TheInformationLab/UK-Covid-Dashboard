@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { CookiesProvider } from 'react-cookie';
 import './index.css';
 import Dashboard from './components/Dashboard';
 import * as serviceWorker from './serviceWorker';
@@ -7,7 +8,9 @@ import "./styles/tailwind.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Dashboard />
+    <CookiesProvider>
+      <Dashboard />
+    </CookiesProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

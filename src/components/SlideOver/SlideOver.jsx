@@ -39,7 +39,7 @@ const SlideOver = (props) => {
       // change width from the state object after 150 milliseconds
       timeoutId = setTimeout(() => {
         setShow(false);
-      }, 700);
+      }, 1000);
     };
     
     if (!props.show) {
@@ -104,11 +104,11 @@ const SlideOver = (props) => {
 };
 
 SlideOver.propTypes = {
-  // bla: PropTypes.string,
+  show: PropTypes.bool,
 };
 
 SlideOver.defaultProps = {
-  // bla: 'test',
+  show: false,
 };
 
 export default SlideOver;

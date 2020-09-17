@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 import TableauEmbed from '../TableauEmbed';
 import SingleSelectMenu from '../SingleSelectMenu/SingleSelectMenu';
 import TextWithBubblesSVG from '../../images/TIL Text with Bubbles Inline.svg';
@@ -16,13 +17,18 @@ const getHeight = () => window.innerHeight
 || document.body.clientWidth;
 
 const Dashboard = (props) => {
+  const [ cookies, setCookie ] = useCookies(['vizParams']);
   const [ sideBar, setSideBar ] = useState(false);
   const [ width, setWidth ] = useState(getWidth());
   const [ height, setHeight ] = useState(getHeight());
   const [ mobile, setMobile ] = useState(width <= 1050);
-  const [ vizParams, setVizParams ] = useState({
-    'Embed Area Type' : 'utla'
-  });
+
+  const defaultParams = cookies.vizParams ? cookies.vizParams : {
+    'Embed Area Type' : 'utla',
+    'Embed Measure': 'cases'
+  };
+
+  const [ vizParams, setVizParams ] = useState(defaultParams);
   const [ vizOptions, setVizOptions ] = useState({
     hideTabs: true,
     hideToolbar: true,
@@ -58,6 +64,7 @@ const Dashboard = (props) => {
     const params = {...vizParams};
     params[paramName] = value;
     setVizParams(params);
+    setCookie('vizParams', JSON.stringify(params), { path: '/' });
   }
 
   useEffect(() => {
