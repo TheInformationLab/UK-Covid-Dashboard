@@ -87,6 +87,12 @@ const SlideOver = (props) => {
                 <div className="relative flex-1 py-6 px-4 sm:px-6">
                   <div className="absolute inset-0 py-6 px-4 sm:px-6">
                     <SingleSelectMenu
+                      label={"Select Measure"}
+                      value={props.vizParams['Embed Measure']}
+                      options={props.measures}
+                      width={250}
+                      onSelect={(value) => props.setParam('Embed Measure', value)}/>  
+                    <SingleSelectMenu
                       label={"View Area Type"}
                       value={props.vizParams['Embed Area Type']}
                       options={props.areaTypes}

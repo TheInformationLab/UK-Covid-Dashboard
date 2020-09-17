@@ -101,6 +101,17 @@ const Dashboard = (props) => {
       value: "ltla"
     },
   ]
+
+  const measures = [
+    {
+      label: "Cases",
+      value: "cases"
+    },
+    {
+      label: "Cases per 100,000 population",
+      value: "pop"
+    }
+  ]
   
   return (
   <div className="min-h-screen bg-gray-100" style={{backgroundColor: '#F4F6F5'}}>
@@ -121,7 +132,13 @@ const Dashboard = (props) => {
               </h1>
             </div>
           </div>
-          <div className="flex hidden md:block"> 
+          <div className="hidden md:flex"> 
+            <SingleSelectMenu
+              label={"Select Measure"}
+              value={vizParams['Embed Measure']}
+              options={measures}
+              width={250}
+              onSelect={(value) => setParam('Embed Measure', value)}/>  
             <SingleSelectMenu
               label={"View Area Type"}
               value={vizParams['Embed Area Type']}
@@ -146,7 +163,7 @@ const Dashboard = (props) => {
       <div className="max-w-7xl mx-auto">
         <div className="">
           <TableauEmbed
-            url="https://clientreporting.theinformationlab.co.uk/t/PublicDemo/views/UKCovid-19CaseAnalysis/UKCasesOverview"
+            url="https://public.tableau.com/views/Covid-19CaseAnalysis_15959477106790/UKCasesOverview"
             parameters={vizParams}
             options={vizOptions}
           />
@@ -154,7 +171,7 @@ const Dashboard = (props) => {
       </div>
     </main>
   </div>
-  <SlideOver close={() => setSideBar(false)} show={sideBar} vizParams={vizParams} areaTypes={areaTypes} setParam={(name, value) => setParam(name, value)}/>
+  <SlideOver close={() => setSideBar(false)} show={sideBar} vizParams={vizParams} areaTypes={areaTypes} measures={measures} setParam={(name, value) => setParam(name, value)}/>
 </div>
 
 )};
