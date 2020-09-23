@@ -96,6 +96,10 @@ const Dashboard = (props) => {
 
   const areaTypes = [
     {
+      label: "Nation",
+      value: "nation"
+    },
+    {
       label: "Region",
       value: "region"
     },
