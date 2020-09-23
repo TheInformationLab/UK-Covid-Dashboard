@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Transition from '../Transition/Transition';
 import SingleSelectMenu from '../SingleSelectMenu';
+import ReactGA from 'react-ga';
 //import { Test } from './SlideOver.styles';
 
 const SlideOver = (props) => {
@@ -45,6 +46,7 @@ const SlideOver = (props) => {
     if (!props.show) {
       closeSlideOver();
     } else {
+      ReactGA.modalview('/options');
       setShow(true);
     }
     

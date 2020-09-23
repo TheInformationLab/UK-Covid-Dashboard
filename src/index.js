@@ -5,6 +5,8 @@ import './index.css';
 import Dashboard from './components/Dashboard';
 import * as serviceWorker from './serviceWorker';
 import "./styles/tailwind.css";
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-27427363-14');
 
 ReactDOM.render(
   <React.StrictMode>

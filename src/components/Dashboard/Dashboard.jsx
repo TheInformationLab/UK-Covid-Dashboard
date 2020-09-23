@@ -5,6 +5,7 @@ import SingleSelectMenu from '../SingleSelectMenu/SingleSelectMenu';
 import TextWithBubblesSVG from '../../images/TIL Text with Bubbles Inline.svg';
 import BubblesSVG from '../../images/Bubbles Colour.svg';
 import SlideOver from '../SlideOver/SlideOver';
+import ReactGA from 'react-ga';
 // import PropTypes from 'prop-types';
 //import { Test } from './Dashboard.styles';
 
@@ -61,6 +62,11 @@ const Dashboard = (props) => {
 
   function setParam (paramName, value) {
     console.log('[Dashboard.js] setParam', paramName, value);
+    ReactGA.event({
+      category: 'Options',
+      action: 'Set ' + paramName,
+      label: value
+    });
     const params = {...vizParams};
     params[paramName] = value;
     setVizParams(params);
@@ -68,6 +74,7 @@ const Dashboard = (props) => {
   }
 
   useEffect(() => {
+    ReactGA.pageview('/', null, 'Dashboard');
     let timeoutId = null;
     const resizeListener = () => {
       // prevent execution of previous setTimeout
@@ -114,7 +121,7 @@ const Dashboard = (props) => {
   ]
   
   return (
-  <div className="min-h-screen bg-gray-100" style={{backgroundColor: '#F4F6F5'}}>
+  <div className="min-h-screen bg-gray-100" style={{backgroundColor: '#F4F6F5', marginBottom: -64}}>
     <nav className="bg-white shadow-sm">
     <div className="mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex h-16">
