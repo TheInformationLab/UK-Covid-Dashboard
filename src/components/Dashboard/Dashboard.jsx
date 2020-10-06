@@ -70,7 +70,7 @@ const Dashboard = (props) => {
     const params = {...vizParams};
     params[paramName] = value;
     setVizParams(params);
-    setCookie('vizParams', JSON.stringify(params), { path: '/' });
+    setCookie('vizParams', JSON.stringify(params), { path: '/', expires:'2021-01-01' });
   }
 
   useEffect(() => {
