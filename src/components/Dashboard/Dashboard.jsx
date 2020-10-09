@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-import TableauEmbed from '../TableauEmbed';
 import SingleSelectMenu from '../SingleSelectMenu/SingleSelectMenu';
 import TextWithBubblesSVG from '../../images/TIL Text with Bubbles Inline.svg';
 import BubblesSVG from '../../images/Bubbles Colour.svg';
 import SlideOver from '../SlideOver/SlideOver';
 import ReactGA from 'react-ga';
+import areas from './areas';
+import CovidDashboards from './CovidDashboards/CovidDashboards';
 // import PropTypes from 'prop-types';
 //import { Test } from './Dashboard.styles';
 
@@ -18,10 +19,10 @@ const getHeight = () => window.innerHeight
 || document.body.clientWidth;
 
 const Dashboard = (props) => {
-  const [ cookies, setCookie ] = useCookies(['vizParams']);
+  const [ cookies, setCookie ] = useCookies(['vizParams', 'localAreas']);
   const [ sideBar, setSideBar ] = useState(false);
   const [ width, setWidth ] = useState(getWidth());
-  const [ height, setHeight ] = useState(getHeight());
+  const [ height, setHeight ] = useState(900);
   const [ mobile, setMobile ] = useState(width <= 1050);
 
   const defaultParams = cookies.vizParams ? cookies.vizParams : {
@@ -37,17 +38,19 @@ const Dashboard = (props) => {
     width: width + 'px',
     height: height + 'px'
   });
+  const [ showOverview, setShowOverview ] = useState(true);
+  const [ localAreas, setLocalAreas ] = useState(cookies.localAreas ? cookies.localAreas : []);
 
   function setOptions () {
     console.log('[Dashboard.js] setOptions');
     setWidth(getWidth());
     setHeight(getHeight());
     let vizWidth = getWidth();
-    let vizHeight = getHeight();
+    let vizHeight = 900;
     const showMobile = vizWidth <= 1050;
     setMobile(showMobile);
     if (showMobile) {
-      vizHeight = 1600;
+      vizHeight = 1800;
     }
     const options = {
       hideTabs: true,
@@ -71,6 +74,33 @@ const Dashboard = (props) => {
     params[paramName] = value;
     setVizParams(params);
     setCookie('vizParams', JSON.stringify(params), { path: '/', expires: new Date('2021-01-01') });
+  }
+
+  function addLocalArea(area) {
+    const curAreas = [...localAreas];
+    curAreas.push(area);
+    setLocalAreas(curAreas);
+    setCookie('localAreas', JSON.stringify(curAreas), { path: '/', expires: new Date('2021-01-01') });
+  }
+
+  function handleRemoveArea(idx) {
+    const curAreas = [...localAreas];
+    curAreas.splice(idx, 1);
+    setLocalAreas(curAreas);
+    setCookie('localAreas', JSON.stringify(curAreas), { path: '/', expires: new Date('2021-01-01') });
+  }
+
+  function handleReplaceArea(idx, area) {
+    const curAreas = [...localAreas];
+    curAreas.splice(idx, 1, area);
+    setLocalAreas(curAreas);
+    setCookie('localAreas', JSON.stringify(curAreas), { path: '/', expires: new Date('2021-01-01') });
+  }
+
+  function handleInsertArea(idx) {
+    const curAreas = [...localAreas];
+    curAreas.splice(idx, 0, {"value": '', "label": ""});
+    setLocalAreas(curAreas);
   }
 
   useEffect(() => {
@@ -145,16 +175,22 @@ const Dashboard = (props) => {
           </div>
           <div className="hidden md:flex"> 
             <SingleSelectMenu
+              label={"Add Local Area"}
+              options={areas}
+              width={getWidth() < 1370 ? 175 : 250}
+              value={''}
+              returnObj={(area) => addLocalArea(area)}/>  
+            <SingleSelectMenu
               label={"Select Measure"}
               value={vizParams['Embed Measure']}
               options={measures}
-              width={250}
+              width={getWidth() < 1370 ? 175 : 250}
               onSelect={(value) => setParam('Embed Measure', value)}/>  
             <SingleSelectMenu
               label={"View Area Type"}
               value={vizParams['Embed Area Type']}
               options={areaTypes}
-              width={250}
+              width={getWidth() < 1370 ? 175 : 250}
               onSelect={(value) => setParam('Embed Area Type', value)}/>  
           </div>
           <div className="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
@@ -171,18 +207,30 @@ const Dashboard = (props) => {
 
   <div className="py-2">
     <main>
-      <div className="max-w-7xl mx-auto">
-        <div className="">
-          <TableauEmbed
-            url="https://clientreporting.theinformationlab.co.uk/t/PublicDemo/views/UKCovid-19CaseAnalysis/UKCasesOverview"
-            parameters={vizParams}
-            options={vizOptions}
-          />
-        </div>
+      <div className="mx-auto">
+        <CovidDashboards
+          showOverview={showOverview}
+          areas={localAreas}
+          vizOptions={vizOptions}
+          vizParams={vizParams}
+          localAreas={areas}
+          removeArea={(idx) => handleRemoveArea(idx)} 
+          addLocalArea={(area) => addLocalArea(area)}
+          replaceLocalArea={(idx, area) => handleReplaceArea(idx, area)}
+          insertArea={(idx) => handleInsertArea(idx)}
+        />
       </div>
     </main>
   </div>
-  <SlideOver close={() => setSideBar(false)} show={sideBar} vizParams={vizParams} areaTypes={areaTypes} measures={measures} setParam={(name, value) => setParam(name, value)}/>
+  <SlideOver
+    close={() => setSideBar(false)}
+    show={sideBar}
+    vizParams={vizParams}
+    areaTypes={areaTypes}
+    measures={measures}
+    areas={areas}
+    setParam={(name, value) => setParam(name, value)}
+    addLocalArea={(area) => addLocalArea(area)}/>
 </div>
 
 )};

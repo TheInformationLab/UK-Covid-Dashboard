@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Transition from '../Transition/Transition';
 import SingleSelectMenu from '../SingleSelectMenu';
+import { Transition } from '@headlessui/react'
 import ReactGA from 'react-ga';
 //import { Test } from './SlideOver.styles';
 
@@ -65,7 +65,7 @@ const SlideOver = (props) => {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <div ref={wrapperRef} className="w-screen max-w-md">
+            <div ref={wrapperRef} className="w-screen max-w-md h-full">
               <div className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll">
                 <header className="space-y-1 py-6 px-4 bg-blue-700 sm:px-6">
                   <div className="flex items-center justify-between space-x-3">
@@ -92,14 +92,20 @@ const SlideOver = (props) => {
                       label={"Select Measure"}
                       value={props.vizParams['Embed Measure']}
                       options={props.measures}
-                      width={250}
+                      width={350}
                       onSelect={(value) => props.setParam('Embed Measure', value)}/>  
                     <SingleSelectMenu
                       label={"View Area Type"}
                       value={props.vizParams['Embed Area Type']}
                       options={props.areaTypes}
-                      width={250}
+                      width={350}
                       onSelect={(value) => props.setParam('Embed Area Type', value)}/>  
+                    <SingleSelectMenu
+                      label={"Add Local Area"}
+                      options={props.areas}
+                      width={350}
+                      value={''}
+                      returnObj={(area) => {props.addLocalArea(area)}}/>  
                   </div>
                 </div>
               </div>

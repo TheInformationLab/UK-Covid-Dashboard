@@ -58,14 +58,18 @@ const SingleSelectMenu = (props) => {
           </button>
         </span>
 
-        <div ref={wrapperRef} className={"absolute z-50 mt-1 w-full rounded-md bg-white shadow-lg " + (!open ? 'hidden' : '')}>
+        <div ref={wrapperRef} style={{maxHeight: 'calc(100vh - 200px)'}} className={"absolute z-50 overflow-y-auto overflow-x-hidden mt-1 w-full rounded-md bg-white shadow-lg " + (!open ? 'hidden' : '')}>
           <ul tabIndex={1} role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-item-3" className="max-h-60 rounded-md py-1 text-base leading-6 shadow-xs overflow-auto focus:outline-none sm:text-sm sm:leading-5">
             {props.options.map((option, idx) => {
               return (
                 <li id={"listbox-item-" + idx}
                   key={idx}
                   onClick={() => {
-                    props.onSelect(option.value);
+                    if (props.onSelect) {
+                      props.onSelect(option.value);
+                    } else {
+                      props.returnObj(option);
+                    }
                     setOpen(false);
                   }}
                   onMouseEnter={() => setHover(idx)}

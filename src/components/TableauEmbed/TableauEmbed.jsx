@@ -209,7 +209,6 @@ class TableauEmbed extends React.Component {
         this.workbook = this.viz.getWorkbook();
         this.sheets = this.workbook.getActiveSheet().getWorksheets();
         this.sheet = this.sheets[0];
-
         this.props.onLoad(new Date());
       }
     };
