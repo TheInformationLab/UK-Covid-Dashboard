@@ -156,7 +156,7 @@ const Dashboard = (props) => {
   
   return (
   <div className="min-h-screen bg-gray-100" style={{backgroundColor: '#F4F6F5', marginBottom: -64}}>
-    <nav className="bg-white shadow-sm">
+    <nav className="fixed bg-white shadow-sm">
     <div className="mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex h-16">
         <div className="flex">
@@ -205,7 +205,7 @@ const Dashboard = (props) => {
     </div>
   </nav>
 
-  <div className="py-2">
+  <div className="py-2 pt-20">
     <main>
       <div className="mx-auto">
         <CovidDashboards
