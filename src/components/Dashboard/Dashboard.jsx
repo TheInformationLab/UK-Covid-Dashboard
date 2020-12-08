@@ -39,7 +39,7 @@ const Dashboard = (props) => {
     width: width + 'px',
     height: height + 'px'
   });
-  const [ showOverview, setShowOverview ] = useState(true);
+  const [ showOverview, setShowOverview ] = useState(cookies.showOverview ? cookies.showOverview === 'show' : true);
   const [ localAreas, setLocalAreas ] = useState(cookies.localAreas ? cookies.localAreas : []);
 
   function setOptions () {
@@ -73,6 +73,7 @@ const Dashboard = (props) => {
     });
     if (value === 'hide' || value === 'show') {
       setShowOverview(value === 'show');
+      setCookie('showOverview', value, { path: '/', expires: new Date('2021-01-01') });
     } else {
       const params = {...vizParams};
       params[paramName] = value;
