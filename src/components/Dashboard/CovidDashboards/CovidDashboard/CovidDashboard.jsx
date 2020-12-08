@@ -40,7 +40,7 @@ const CovidDashboard = (props) => {
   } else if (showAreaSelector) {
     return (
       <div className="mb-4">
-        <div className="bg-white shadow-sm mb-2 p-2 mx-auto" style={{maxWidth: 1385}}>
+        <div className="bg-white shadow-sm mb-2 p-2 mx-auto top-0" style={{maxWidth: 1385, position: 'sticky'}}>
           <div className="flex flex-inline mx-auto">
             <SingleSelectMenu
                 label={"Change Area"}

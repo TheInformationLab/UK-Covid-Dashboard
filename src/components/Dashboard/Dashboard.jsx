@@ -156,7 +156,11 @@ const Dashboard = (props) => {
   
   return (
   <div className="min-h-screen bg-gray-100" style={{backgroundColor: '#F4F6F5', marginBottom: -64}}>
+<<<<<<< Updated upstream
     <nav className="bg-white shadow-sm">
+=======
+    <nav className="fixed bg-white shadow-sm min-w-full">
+>>>>>>> Stashed changes
     <div className="mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex h-16">
         <div className="flex">
@@ -169,7 +173,7 @@ const Dashboard = (props) => {
           <div className="flex">
             <div className="max-w-7xl px-4 my-auto sm:px-6 lg:px-8">
               <h1 className="text-2xl font-regular leading-tight text-gray-900">
-                UK Coronavirus Dashboard
+                UK Covid-19
               </h1>
             </div>
           </div>
