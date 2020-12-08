@@ -8,6 +8,7 @@ module.exports = {
       }
     }
   },
+  purge: ['./src/**/*.js', './public/index.html'],
   variants: {},
   plugins: [
     require("@tailwindcss/ui")({
