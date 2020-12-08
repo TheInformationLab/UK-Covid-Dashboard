@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { Transition } from '@headlessui/react'
 //import { Test } from './SectionMenu.styles';
 
@@ -72,13 +71,5 @@ const SectionMenu = (props) => {
     </div>
   </div>
 )};
-
-SectionMenu.propTypes = {
-  // bla: PropTypes.string,
-};
-
-SectionMenu.defaultProps = {
-  // bla: 'test',
-};
 
 export default SectionMenu;

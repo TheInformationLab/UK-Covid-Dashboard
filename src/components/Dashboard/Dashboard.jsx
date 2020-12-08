@@ -7,6 +7,8 @@ import SlideOver from '../SlideOver/SlideOver';
 import ReactGA from 'react-ga';
 import areas from './areas';
 import CovidDashboards from './CovidDashboards/CovidDashboards';
+import * as Scroll from 'react-scroll';
+const scroller = Scroll.scroller;
 // import PropTypes from 'prop-types';
 //import { Test } from './Dashboard.styles';
 
@@ -23,7 +25,6 @@ const Dashboard = (props) => {
   const [ sideBar, setSideBar ] = useState(false);
   const [ width, setWidth ] = useState(getWidth());
   const [ height, setHeight ] = useState(900);
-  const [ mobile, setMobile ] = useState(width <= 1050);
 
   const defaultParams = cookies.vizParams ? cookies.vizParams : {
     'Embed Area Type' : 'utla',
@@ -48,7 +49,6 @@ const Dashboard = (props) => {
     let vizWidth = getWidth();
     let vizHeight = 900;
     const showMobile = vizWidth <= 1050;
-    setMobile(showMobile);
     console.log('[Dashboard.js] Mobile', showMobile);
     if (showMobile) {
       vizHeight = 1800;
@@ -71,10 +71,23 @@ const Dashboard = (props) => {
       action: 'Set ' + paramName,
       label: value
     });
-    const params = {...vizParams};
-    params[paramName] = value;
-    setVizParams(params);
-    setCookie('vizParams', JSON.stringify(params), { path: '/', expires: new Date('2021-01-01') });
+    if (value === 'hide' || value === 'show') {
+      setShowOverview(value === 'show');
+    } else {
+      const params = {...vizParams};
+      params[paramName] = value;
+      setVizParams(params);
+      setCookie('vizParams', JSON.stringify(params), { path: '/', expires: new Date('2021-01-01') });
+    }
+  }
+
+  function handleScrollTo(ref) {
+    setTimeout(() => {
+      scroller.scrollTo(ref, {
+        duration: 1500,
+        smooth: true
+      });
+    }, 500)
   }
 
   function addLocalArea(area) {
@@ -82,6 +95,8 @@ const Dashboard = (props) => {
     curAreas.push(area);
     setLocalAreas(curAreas);
     setCookie('localAreas', JSON.stringify(curAreas), { path: '/', expires: new Date('2021-01-01') });
+    handleScrollTo(area.value);
+    setSideBar(false);
   }
 
   function handleRemoveArea(idx) {
@@ -128,6 +143,10 @@ const Dashboard = (props) => {
 
   const areaTypes = [
     {
+      label: showOverview ? "Hide Overview" : "Show Overview",
+      value: showOverview ? "hide" : "show"
+    },
+    {
       label: "Nation",
       value: "nation"
     },
@@ -158,56 +177,37 @@ const Dashboard = (props) => {
   
   return (
   <div className="min-h-screen bg-gray-100" style={{backgroundColor: '#F4F6F5', marginBottom: -64}}>
-    <nav className="fixed bg-white shadow-sm min-w-full">
-    <div className="mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex h-16">
-        <div className="flex">
-          <div className="flex items-center">
-            <img className="block lg:hidden h-6 w-auto" src={BubblesSVG} alt="Workflow logo"/>
-            <img className="hidden lg:block h-10 w-auto" src={TextWithBubblesSVG} alt="Workflow logo"/>
-          </div>
-        </div>
-        <div className="flex justify-between w-full">
+
+  <nav className="sticky top-0 bg-white shadow-sm min-w-full">
+      <div className="mx-auto py-1 px-4 sm:px-6 lg:px-8">
+        <div className="flex h-14">
           <div className="flex">
-            <div className="max-w-7xl px-4 my-auto sm:px-6 lg:px-8">
-              <h1 className="text-2xl font-regular leading-tight text-gray-900">
-                UK Covid-19
-              </h1>
+            <div className="flex items-center">
+              <img className="block lg:hidden h-6 w-auto" src={BubblesSVG} alt="Workflow logo"/>
+              <img className="hidden lg:block h-10 w-auto" src={TextWithBubblesSVG} alt="Workflow logo"/>
             </div>
           </div>
-          <div className="hidden md:flex"> 
-            <SingleSelectMenu
-              label={"Add Local Area"}
-              options={areas}
-              width={getWidth() < 1370 ? 175 : 250}
-              value={''}
-              returnObj={(area) => addLocalArea(area)}/>  
-            <SingleSelectMenu
-              label={"Select Measure"}
-              value={vizParams['Embed Measure']}
-              options={measures}
-              width={getWidth() < 1370 ? 175 : 250}
-              onSelect={(value) => setParam('Embed Measure', value)}/>  
-            <SingleSelectMenu
-              label={"View Area Type"}
-              value={vizParams['Embed Area Type']}
-              options={areaTypes}
-              width={getWidth() < 1370 ? 175 : 250}
-              onSelect={(value) => setParam('Embed Area Type', value)}/>  
-          </div>
-          <div className="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
-            <button type="button" onMouseDown={() => setSideBar(true)} className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:bg-gray-200 transition ease-in-out duration-150" aria-label="Open sidebar">
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-          </div>
-        </div>     
+          <div className="flex justify-between w-full">
+            <div className="flex">
+              <div className="max-w-7xl px-4 my-auto sm:px-6 lg:px-8">
+                <h1 className="text-xl md:text-2xl font-regular leading-tight text-gray-900">
+                  UK Coronavirus Dashboard
+                </h1>
+              </div>
+            </div>
+            <div className="pl-1 pt-1 sm:pl-3 sm:pt-3">
+              <button type="button" onMouseDown={() => setSideBar(true)} className="-ml-0.5 -mt-0.5 h-10 w-10 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:bg-gray-200 transition ease-in-out duration-150" aria-label="Open sidebar">
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+            </div>
+          </div>     
+        </div>
       </div>
-    </div>
-  </nav>
-
-  <div className="pb-2 pt-20">
+    </nav>
+  
+  <div className="pb-2 pt-2">
     <main>
       <div className="mx-auto" >
         <CovidDashboards
@@ -224,15 +224,16 @@ const Dashboard = (props) => {
       </div>
     </main>
   </div>
+
   <SlideOver
-    close={() => setSideBar(false)}
-    show={sideBar}
-    vizParams={vizParams}
-    areaTypes={areaTypes}
-    measures={measures}
-    areas={areas}
-    setParam={(name, value) => setParam(name, value)}
-    addLocalArea={(area) => addLocalArea(area)}/>
+      close={() => setSideBar(false)}
+      show={sideBar}
+      vizParams={vizParams}
+      areaTypes={areaTypes}
+      measures={measures}
+      areas={areas}
+      setParam={(name, value) => setParam(name, value)}
+      addLocalArea={(area) => addLocalArea(area)}/>
 </div>
 
 )};

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import TableauEmbed from '../../../TableauEmbed';
 import SectionMenu from './SectionMenu/SectionMenu';
 import SingleSelectMenu from '../../../SingleSelectMenu';
@@ -11,18 +10,18 @@ const CovidDashboard = (props) => {
 
   if (props.area === 'overview') {
     return (
-      <div className="mb-4">
-          <TableauEmbed
-            url="https://clientreporting.theinformationlab.co.uk/t/PublicDemo/views/UKCovid-19CaseAnalysis/UKCasesOverview"
-            parameters={props.vizParams}
-            options={props.vizOptions}
-          />
-        </div>
+      <div className="mb-2">
+        <TableauEmbed
+          url="https://clientreporting.theinformationlab.co.uk/t/PublicDemo/views/UKCovid-19CaseAnalysis/UKCasesOverview"
+          parameters={props.vizParams}
+          options={props.vizOptions}
+        />
+      </div>
     )
   } else if (props.area === '') {
     return (
-      <div className="mb-4">
-          <div className="bg-white shadow-sm mb-2 p-2 mx-auto" style={{maxWidth: 1385}}>
+      <div className="grid grid-cols-12 sticky z-10 top-0 min-w-full" style={{background: '#f4f6f5'}}>
+        <div className="col-span-12 2xl:col-start-2 2xl:col-span-10">
           <div className="flex flex-inline mx-auto">
             <SingleSelectMenu
                 label={"Select Local Area"}
@@ -32,71 +31,71 @@ const CovidDashboard = (props) => {
                 returnObj={(area) => {
                   props.replaceLocalArea(area);
                   setShowAreaSelector(false);
-                }}/>  
+                }}/> 
           </div>
         </div>
       </div>
     )
   } else if (showAreaSelector) {
     return (
-      <div className="mb-4">
-        <div className="bg-white shadow-sm mb-2 p-2 mx-auto top-0" style={{maxWidth: 1385, position: 'sticky'}}>
-          <div className="flex flex-inline mx-auto">
-            <SingleSelectMenu
-                label={"Change Area"}
-                value={props.area}
-                options={props.localAreas}
-                width={250}
-                returnObj={(area) => {
-                  props.replaceLocalArea(area);
-                  setShowAreaSelector(false);
-                }}/>  
+      <div>
+        <div className="grid grid-cols-12 sticky z-10 top-0 min-w-full" style={{background: '#f4f6f5'}}>
+          <div className="col-span-12 2xl:col-start-2 2xl:col-span-10">
+            <div className="bg-white py-4 px-2 shadow-sm flex flex-inline mx-auto">
+              <SingleSelectMenu
+                  label={"Change Area"}
+                  value={props.area}
+                  options={props.localAreas}
+                  width={250}
+                  returnObj={(area) => {
+                    props.replaceLocalArea(area);
+                    setShowAreaSelector(false);
+                  }}/>  
+            </div>
           </div>
         </div>
-        <TableauEmbed
-          url="https://clientreporting.theinformationlab.co.uk/t/PublicDemo/views/UKCovid-19CaseAnalysis/LocalCases"
-          options={{
-            ...props.vizOptions,
-            height : props.vizOptions.height === '1800px' ? '770px' : props.vizOptions.height
-          }}
-          parameters={{
-            'Embed Measure' : props.vizParams['Embed Measure'],
-            'Embed Neighbour Code' : props.area
-          }}
-        />
+        <div className="mt-2">
+          <TableauEmbed
+            url="https://clientreporting.theinformationlab.co.uk/t/PublicDemo/views/UKCovid-19CaseAnalysis/LocalCases"
+            options={{
+              ...props.vizOptions,
+              height : props.vizOptions.height === '1800px' ? '770px' : props.vizOptions.height
+            }}
+            parameters={{
+              'Embed Measure' : props.vizParams['Embed Measure'],
+              'Embed Neighbour Code' : props.area
+            }}
+          />
+        </div>
       </div>
     )
   } else {
     return (
-      <div className="mb-4">
-        <div className="bg-white shadow-sm mb-2 p-2 mx-auto" style={{maxWidth: 1385}}>
-          <div className="flex flex-inline mx-auto">
-            <SectionMenu removeArea={() => props.removeArea()} toggleAreaSelector={() => setShowAreaSelector(!showAreaSelector)} insertArea={() => props.insertArea()}/>
-            <div className="flex text-2xl pl-4">{props.name} Coronavirus Dashboard</div>
+      <div>
+        <div className="grid grid-cols-12 sticky z-10 top-0 min-w-full" style={{background: '#f4f6f5'}}>
+          <div className="col-span-12 2xl:col-start-2 2xl:col-span-10">
+            <div className="bg-white py-4 px-2 shadow-sm flex flex-inline mx-auto">
+              <SectionMenu removeArea={() => props.removeArea()} toggleAreaSelector={() => setShowAreaSelector(!showAreaSelector)} insertArea={() => props.insertArea()}/>
+              <div className="flex text-xl md:text-2xl  pl-4">{props.name} Coronavirus Dashboard</div>
+            </div>
           </div>
         </div>
-        <TableauEmbed
-          url="https://clientreporting.theinformationlab.co.uk/t/PublicDemo/views/UKCovid-19CaseAnalysis/LocalCases"
-          options={{
-            ...props.vizOptions,
-            height : props.vizOptions.height === '1800px' ? '770px' : props.vizOptions.height
-          }}
-          parameters={{
-            'Embed Measure' : props.vizParams['Embed Measure'],
-            'Embed Neighbour Code' : props.area
-          }}
-        />
+        <div className="mt-2">
+          <TableauEmbed
+            url="https://clientreporting.theinformationlab.co.uk/t/PublicDemo/views/UKCovid-19CaseAnalysis/LocalCases"
+            options={{
+              ...props.vizOptions,
+              height : props.vizOptions.height === '1800px' ? '770px' : props.vizOptions.height
+            }}
+            parameters={{
+              'Embed Measure' : props.vizParams['Embed Measure'],
+              'Embed Neighbour Code' : props.area
+            }}
+          />
+        </div>
       </div>
     )
   }
-};
-
-CovidDashboard.propTypes = {
-  // bla: PropTypes.string,
-};
-
-CovidDashboard.defaultProps = {
-  // bla: 'test',
 };
 
 export default CovidDashboard;
