@@ -49,6 +49,7 @@ const Dashboard = (props) => {
     let vizHeight = 900;
     const showMobile = vizWidth <= 1050;
     setMobile(showMobile);
+    console.log('[Dashboard.js] Mobile', showMobile);
     if (showMobile) {
       vizHeight = 1800;
     }
@@ -105,6 +106,7 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     ReactGA.pageview('/', null, 'Dashboard');
+    setOptions();
     let timeoutId = null;
     const resizeListener = () => {
       // prevent execution of previous setTimeout
@@ -156,11 +158,7 @@ const Dashboard = (props) => {
   
   return (
   <div className="min-h-screen bg-gray-100" style={{backgroundColor: '#F4F6F5', marginBottom: -64}}>
-<<<<<<< Updated upstream
-    <nav className="bg-white shadow-sm">
-=======
     <nav className="fixed bg-white shadow-sm min-w-full">
->>>>>>> Stashed changes
     <div className="mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex h-16">
         <div className="flex">
@@ -209,9 +207,9 @@ const Dashboard = (props) => {
     </div>
   </nav>
 
-  <div className="py-2">
+  <div className="pb-2 pt-20">
     <main>
-      <div className="mx-auto">
+      <div className="mx-auto" >
         <CovidDashboards
           showOverview={showOverview}
           areas={localAreas}
