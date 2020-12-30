@@ -8,7 +8,7 @@ const CovidDashboard = (props) => {
 
   const [ showAreaSelector, setShowAreaSelector ] = useState(false);
 
-  const vizUrl = "https://public.tableau.com/profile/craig.bloodworth#!/vizhome/Covid-19CaseAnalysis_15959477106790"
+  const vizUrl = "https://public.tableau.com/views/Covid-19CaseAnalysis_15959477106790"
   // const vizUrl = "https://clientreporting.theinformationlab.co.uk/t/PublicDemo/views/UKCovid-19CaseAnalysis"
 
   if (props.area === 'overview') {
