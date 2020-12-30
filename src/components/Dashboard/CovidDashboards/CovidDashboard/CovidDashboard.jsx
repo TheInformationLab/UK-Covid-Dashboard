@@ -8,11 +8,14 @@ const CovidDashboard = (props) => {
 
   const [ showAreaSelector, setShowAreaSelector ] = useState(false);
 
+  const vizUrl = "https://public.tableau.com/profile/craig.bloodworth#!/vizhome/Covid-19CaseAnalysis_15959477106790"
+  // const vizUrl = "https://clientreporting.theinformationlab.co.uk/t/PublicDemo/views/UKCovid-19CaseAnalysis"
+
   if (props.area === 'overview') {
     return (
       <div className="mb-2">
         <TableauEmbed
-          url="https://clientreporting.theinformationlab.co.uk/t/PublicDemo/views/UKCovid-19CaseAnalysis/UKCasesOverview"
+          url={`${vizUrl}/UKCasesOverview`}
           parameters={props.vizParams}
           options={props.vizOptions}
         />
@@ -56,7 +59,7 @@ const CovidDashboard = (props) => {
         </div>
         <div className="mt-2">
           <TableauEmbed
-            url="https://clientreporting.theinformationlab.co.uk/t/PublicDemo/views/UKCovid-19CaseAnalysis/LocalCases"
+            url={`${vizUrl}/LocalCases`}
             options={{
               ...props.vizOptions,
               height : props.vizOptions.height === '1800px' ? '770px' : props.vizOptions.height
@@ -82,7 +85,7 @@ const CovidDashboard = (props) => {
         </div>
         <div className="mt-2">
           <TableauEmbed
-            url="https://clientreporting.theinformationlab.co.uk/t/PublicDemo/views/UKCovid-19CaseAnalysis/LocalCases"
+            url={`${vizUrl}/LocalCases`}
             options={{
               ...props.vizOptions,
               height : props.vizOptions.height === '1800px' ? '770px' : props.vizOptions.height
