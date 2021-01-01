@@ -73,12 +73,12 @@ const Dashboard = (props) => {
     });
     if (value === 'hide' || value === 'show') {
       setShowOverview(value === 'show');
-      setCookie('showOverview', value, { path: '/', expires: new Date('2021-01-01') });
+      setCookie('showOverview', value, { path: '/', expires: new Date('2022-01-01') });
     } else {
       const params = {...vizParams};
       params[paramName] = value;
       setVizParams(params);
-      setCookie('vizParams', JSON.stringify(params), { path: '/', expires: new Date('2021-01-01') });
+      setCookie('vizParams', JSON.stringify(params), { path: '/', expires: new Date('2022-01-01') });
     }
   }
 
@@ -95,7 +95,7 @@ const Dashboard = (props) => {
     const curAreas = [...localAreas];
     curAreas.push(area);
     setLocalAreas(curAreas);
-    setCookie('localAreas', JSON.stringify(curAreas), { path: '/', expires: new Date('2021-01-01') });
+    setCookie('localAreas', JSON.stringify(curAreas), { path: '/', expires: new Date('2022-01-01') });
     handleScrollTo(area.value);
     setSideBar(false);
   }
@@ -104,14 +104,14 @@ const Dashboard = (props) => {
     const curAreas = [...localAreas];
     curAreas.splice(idx, 1);
     setLocalAreas(curAreas);
-    setCookie('localAreas', JSON.stringify(curAreas), { path: '/', expires: new Date('2021-01-01') });
+    setCookie('localAreas', JSON.stringify(curAreas), { path: '/', expires: new Date('2022-01-01') });
   }
 
   function handleReplaceArea(idx, area) {
     const curAreas = [...localAreas];
     curAreas.splice(idx, 1, area);
     setLocalAreas(curAreas);
-    setCookie('localAreas', JSON.stringify(curAreas), { path: '/', expires: new Date('2021-01-01') });
+    setCookie('localAreas', JSON.stringify(curAreas), { path: '/', expires: new Date('2022-01-01') });
   }
 
   function handleInsertArea(idx) {
