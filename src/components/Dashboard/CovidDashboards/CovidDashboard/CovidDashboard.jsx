@@ -13,12 +13,24 @@ const CovidDashboard = (props) => {
 
   if (props.area === 'overview') {
     return (
-      <div className="mb-2">
-        <TableauEmbed
-          url={`${vizUrl}/UKCasesOverview`}
-          parameters={props.vizParams}
-          options={props.vizOptions}
-        />
+      <div>
+        <div className="mb-2">
+          <TableauEmbed
+            url={`${vizUrl}/Vaccines`}
+            parameters={props.vizParams}
+            options={{
+              ...props.vizOptions,
+              height : '770px'
+            }}
+          />
+        </div>
+        <div className="mb-2">
+            <TableauEmbed
+              url={`${vizUrl}/UKCasesOverview`}
+              parameters={props.vizParams}
+              options={props.vizOptions}
+            />
+          </div>
       </div>
     )
   } else if (props.area === '') {

@@ -28,7 +28,7 @@ const Dashboard = (props) => {
 
   const defaultParams = cookies.vizParams ? cookies.vizParams : {
     'Embed Area Type' : 'utla',
-    'Embed Measure': 'cases'
+    'Embed Measure': 'pop'
   };
 
   const [ vizParams, setVizParams ] = useState(defaultParams);
