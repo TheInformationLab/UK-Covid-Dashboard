@@ -11,7 +11,9 @@ const CovidDashboard = (props) => {
   // const vizUrl = "https://public.tableau.com/views/Covid-19CaseAnalysis_15959477106790"
   const vizUrl = "https://clientreporting.theinformationlab.co.uk/t/PublicDemo/views/UKCovid-19CaseAnalysis"
 
-  if (props.area === 'overview') {
+  const today = new Date();
+
+  if (props.area === 'overview' && today.getDay() >= 5) {
     return (
       <div>
         <div className="mb-2">
@@ -31,6 +33,28 @@ const CovidDashboard = (props) => {
               options={props.vizOptions}
             />
           </div>
+      </div>
+    )
+  } else if (props.area === 'overview') {
+    return (
+      <div>
+        <div className="mb-2">
+            <TableauEmbed
+              url={`${vizUrl}/UKCasesOverview`}
+              parameters={props.vizParams}
+              options={props.vizOptions}
+            />
+          </div>
+        <div className="mb-2">
+          <TableauEmbed
+            url={`${vizUrl}/Vaccines`}
+            parameters={props.vizParams}
+            options={{
+              ...props.vizOptions,
+              height : '770px'
+            }}
+          />
+        </div>
       </div>
     )
   } else if (props.area === '') {
