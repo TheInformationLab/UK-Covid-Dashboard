@@ -35,16 +35,6 @@ const CovidDashboard = (props) => {
               options={props.vizOptions}
             />
           </div>
-        <div className="mb-2">
-          <TableauEmbed
-            url={`${vizUrl}/Vaccines`}
-            parameters={props.vizParams}
-            options={{
-              ...props.vizOptions,
-              height : '770px'
-            }}
-          />
-        </div>
       </div>
     )
   } else if (props.area === '') {
