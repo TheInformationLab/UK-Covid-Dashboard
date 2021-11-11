@@ -8,11 +8,10 @@ module.exports = {
       }
     }
   },
-  purge: ['./src/**/*.js', './public/index.html'],
-  variants: {},
-  plugins: [
-    require("@tailwindcss/ui")({
-      layout: "sidebar"
-    })
-  ]
+  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+  darkMode: false, // or 'media' or 'class'
+  variants: {
+    extend: {},
+  },
+  plugins: []
 };
