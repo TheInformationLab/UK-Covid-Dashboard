@@ -6338,7 +6338,7 @@ global.tableauSoftware = global.tableauSoftware || {};
       url.push('&:showVizHome=n');
       // We don't support mixed mode where the API script file is debug
       // and the iframe code is release. Force to debug in this case
-      url.push('&:jsdebug=y');
+      // url.push('&:jsdebug=y');
       if (!this.fixedSize) {
         url.push('&:bootstrapWhenNotified=y');
       }

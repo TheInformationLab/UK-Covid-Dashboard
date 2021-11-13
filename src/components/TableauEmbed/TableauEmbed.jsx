@@ -219,7 +219,7 @@ class TableauEmbed extends React.Component {
       this.viz = null;
     }
 
-    console.log('[TableauEmbed] initTableau vizOptions', vizOptions);
+    console.log('[TableauEmbed] initTableau vizUrl', vizUrl);
     this.viz = new Tableau.Viz(this.container, vizUrl, options);
 
     // set up automatic refreshing if specified
