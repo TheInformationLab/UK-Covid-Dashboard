@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-import SingleSelectMenu from '../SingleSelectMenu/SingleSelectMenu';
 import TextWithBubblesSVG from '../../images/TIL Text with Bubbles Inline.svg';
 import BubblesSVG from '../../images/Bubbles Colour.svg';
 import SlideOver from '../SlideOver/SlideOver';

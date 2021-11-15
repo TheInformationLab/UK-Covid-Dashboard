@@ -75,6 +75,7 @@ const SingleSelectMenu = (props) => {
                   onMouseEnter={() => setHover(idx)}
                   onMouseLeave={() => setHover(-1)}
                   role="option"
+                  aria-selected={false}
                   className={"cursor-default select-none relative px-2 py-2 pl-8 pr-4 " + (hover === idx ? 'text-white bg-blue-600' : 'text-gray-900')}
                 >
                   <span className={"text-sm font-normal block truncate " + (option.value === props.value ? 'font-semibold' : '')}>
